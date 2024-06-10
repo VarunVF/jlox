@@ -7,6 +7,7 @@ enum TokenType {
     BANG, BANG_EQUAL,
     EQUAL, EQUAL_EQUAL,
     LESS, LESS_EQUAL,
+    GREATER, GREATER_EQUAL,
 
     // Literals
     IDENTIFIER, STRING, NUMBER,
