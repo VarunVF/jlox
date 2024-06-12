@@ -1,3 +1,5 @@
+package com.craftinginterpreters.lox;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,16 +32,36 @@ class Scanner {
     private void scanToken() {
         char c = advance();
         switch (c) {
-            case '(': addToken(TokenType.LEFT_PAREN); break;
-            case ')': addToken(TokenType.RIGHT_PAREN); break;
-            case '{': addToken(TokenType.LEFT_BRACE); break;
-            case '}': addToken(TokenType.RIGHT_BRACE); break;
-            case ',': addToken(TokenType.COMMA); break;
-            case '.': addToken(TokenType.DOT); break;
-            case '-': addToken(TokenType.MINUS); break;
-            case '+': addToken(TokenType.PLUS); break;
-            case ';': addToken(TokenType.SEMICOLON); break;
-            case '*': addToken(TokenType.STAR); break;
+            case '(':
+                addToken(TokenType.LEFT_PAREN);
+                break;
+            case ')':
+                addToken(TokenType.RIGHT_PAREN);
+                break;
+            case '{':
+                addToken(TokenType.LEFT_BRACE);
+                break;
+            case '}':
+                addToken(TokenType.RIGHT_BRACE);
+                break;
+            case ',':
+                addToken(TokenType.COMMA);
+                break;
+            case '.':
+                addToken(TokenType.DOT);
+                break;
+            case '-':
+                addToken(TokenType.MINUS);
+                break;
+            case '+':
+                addToken(TokenType.PLUS);
+                break;
+            case ';':
+                addToken(TokenType.SEMICOLON);
+                break;
+            case '*':
+                addToken(TokenType.STAR);
+                break;
 
             case '!':
                 addToken(match('=') ? TokenType.BANG_EQUAL : TokenType.BANG);
@@ -53,7 +75,7 @@ class Scanner {
             case '>':
                 addToken(match('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER);
 
-            // SLASH '/' - Either a comment or division. Check for another '/'
+                // SLASH '/' - Either a comment or division. Check for another '/'
             case '/':
                 if (match('/')) {
                     while (peek() != '\n' && !isAtEnd()) {
@@ -91,16 +113,19 @@ class Scanner {
     } /* scanToken() */
 
     private void identifier() {
-        while (isAlphaNumeric(peek())) advance();
+        while (isAlphaNumeric(peek()))
+            advance();
 
         String text = source.substring(start, current);
         TokenType type = keywords.get(text);
-        if (type == null) type = TokenType.IDENTIFIER;
+        if (type == null)
+            type = TokenType.IDENTIFIER;
         addToken(type);
     }
 
     private void number() {
-        while (isDigit(peek()) && !isAtEnd()) advance();
+        while (isDigit(peek()) && !isAtEnd())
+            advance();
 
         // Look for a fractional part.
         if (peek() == '.' && isDigit(peekNext())) {
@@ -108,7 +133,8 @@ class Scanner {
             advance();
         }
 
-        while (isDigit(peek())) advance();
+        while (isDigit(peek()))
+            advance();
 
         double numberValue = Double.parseDouble(source.substring(start, current));
         addToken(TokenType.NUMBER, numberValue);
@@ -116,7 +142,8 @@ class Scanner {
 
     private void string() {
         while (peek() != '"' && !isAtEnd()) {
-            if (peek() == '\n') line++;
+            if (peek() == '\n')
+                line++;
             advance();
         }
 
@@ -134,28 +161,32 @@ class Scanner {
     }
 
     private boolean match(char expected) {
-        if (isAtEnd()) return false;
-        if (source.charAt(current) != expected) return false;
+        if (isAtEnd())
+            return false;
+        if (source.charAt(current) != expected)
+            return false;
 
         current++;
         return true;
     }
 
     private char peek() {
-        if (isAtEnd()) return 0;
+        if (isAtEnd())
+            return 0;
         return source.charAt(current);
     }
 
     // 2 characters of lookahead
     private char peekNext() {
-        if (current + 1 >= source.length()) return 0;
+        if (current + 1 >= source.length())
+            return 0;
         return source.charAt(current + 1);
     }
 
     private boolean isAlpha(char c) {
         return c >= 'a' && c <= 'z' ||
-               c >= 'A' && c <= 'Z' ||
-               c == '_';
+                c >= 'A' && c <= 'Z' ||
+                c == '_';
     }
 
     private boolean isAlphaNumeric(char c) {
@@ -183,26 +214,25 @@ class Scanner {
         return current >= source.length();
     }
 
-
-        private static final Map<String, TokenType> keywords;
+    private static final Map<String, TokenType> keywords;
 
     static {
         keywords = new HashMap<>();
-        keywords.put("and",    TokenType.AND);
-        keywords.put("class",  TokenType.CLASS);
-        keywords.put("else",   TokenType.ELSE);
-        keywords.put("false",  TokenType.FALSE);
-        keywords.put("for",    TokenType.FOR);
-        keywords.put("fun",    TokenType.FUN);
-        keywords.put("if",     TokenType.IF);
-        keywords.put("nil",    TokenType.NIL);
-        keywords.put("or",     TokenType.OR);
-        keywords.put("print",  TokenType.PRINT);
+        keywords.put("and", TokenType.AND);
+        keywords.put("class", TokenType.CLASS);
+        keywords.put("else", TokenType.ELSE);
+        keywords.put("false", TokenType.FALSE);
+        keywords.put("for", TokenType.FOR);
+        keywords.put("fun", TokenType.FUN);
+        keywords.put("if", TokenType.IF);
+        keywords.put("nil", TokenType.NIL);
+        keywords.put("or", TokenType.OR);
+        keywords.put("print", TokenType.PRINT);
         keywords.put("return", TokenType.RETURN);
-        keywords.put("super",  TokenType.SUPER);
-        keywords.put("this",   TokenType.THIS);
-        keywords.put("true",   TokenType.TRUE);
-        keywords.put("var",    TokenType.VAR);
-        keywords.put("while",  TokenType.WHILE);
+        keywords.put("super", TokenType.SUPER);
+        keywords.put("this", TokenType.THIS);
+        keywords.put("true", TokenType.TRUE);
+        keywords.put("var", TokenType.VAR);
+        keywords.put("while", TokenType.WHILE);
     }
 }

@@ -1,3 +1,5 @@
+package com.craftinginterpreters.lox;
+
 import java.io.BufferedReader;                          // Reads text from an input stream
 import java.io.InputStreamReader;
 import java.io.IOException;                             // General class of I/O exceptions
@@ -34,9 +36,9 @@ public class Lox {
         BufferedReader reader = new BufferedReader(input);
 
         for (;;) {
-            System.out.println("> ");
+            System.out.print("> ");
             String line = reader.readLine();
-            if (line == null) break;                    // Check for Ctrl-d (end-of-file)
+            if (line == null) break;                    // Check for Ctrl-D / Ctrl-Z (end-of-file)
             run(line);
             hadError = false;                           // Reset hadError
         }
