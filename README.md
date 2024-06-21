@@ -137,7 +137,7 @@ class Alien < Entity {
     }
 }
 ```
-We can methods of the superclass using `super`.
+We can access methods of the superclass using `super`.
 
 ## Comments
 jlox allows single-line comments with `//` or C-style block comments with `/**/`.
