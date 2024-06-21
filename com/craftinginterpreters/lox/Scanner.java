@@ -75,22 +75,13 @@ class Scanner {
             case '>':
                 addToken(match('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER);
 
-            // Char '/' - Either a comment or division. Check for another '/'
+                // SLASH '/' - Either a comment or division. Check for another '/'
             case '/':
-                if (match('/')) {               // Single-line comment
+                if (match('/')) {
                     while (peek() != '\n' && !isAtEnd()) {
                         advance();
                     }
-                } else if (match('*')) {        // C-style block comment
-                    while (!isAtEnd()) {
-                        advance();
-                        if (peek() == '\n') line++;
-                        else if (peek() == '*' && peekNext() == '/') {
-                            current += 2;
-                            break;
-                        }
-                    }
-                } else {                                 // Division (SLASH)
+                } else {
                     addToken(TokenType.SLASH);
                 }
                 break;

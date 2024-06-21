@@ -1,9 +1,0 @@
-num = 0;
-
-/*
- * this is my block comment
- */
-
-if (num >= 0) {
-    num = 1;        // reset num
-}
