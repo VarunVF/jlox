@@ -125,7 +125,7 @@ class Entity {
 
 var myEntity = Entity(57, "Bob");
 ```
-The arguments passed to the class are forwareded to the `init` method.
+The arguments passed to the class are forwarded to the `init` method.
 
 ### Inheritance
 Lox supports single inheritance using the `<` operator.
